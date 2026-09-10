@@ -246,7 +246,7 @@
                     <td class="stat-cell work-count">0</td>
                     <td class="stat-cell off-count">0</td>
                 </tr>
-                <!-- 02. 劉佳峰 -->
+                <!-- 02. 劉佳峰 (已修正 9/5 為黃底加班) -->
                 <tr>
                     <td class="name-cell">劉佳峰</td>
                     <td class="day">\</td><td class="day">\</td><td class="day">\</td><td class="day">\</td><td class="day holiday ot">\</td>
@@ -383,7 +383,6 @@
                 <!-- 每日日班人數統計 -->
                 <tr>
                     <td class="summary-title">日班人數</td>
-                    <!-- 9/1 ~ 9/30 日班人數儲存格 -->
                     <td class="day-sum-cell" id="day-sum-1">0</td><td class="day-sum-cell" id="day-sum-2">0</td><td class="day-sum-cell" id="day-sum-3">0</td><td class="day-sum-cell" id="day-sum-4">0</td><td class="day-sum-cell" id="day-sum-5">0</td>
                     <td class="day-sum-cell" id="day-sum-6">0</td><td class="day-sum-cell" id="day-sum-7">0</td><td class="day-sum-cell" id="day-sum-8">0</td><td class="day-sum-cell" id="day-sum-9">0</td><td class="day-sum-cell" id="day-sum-10">0</td>
                     <td class="day-sum-cell" id="day-sum-11">0</td><td class="day-sum-cell" id="day-sum-12">0</td><td class="day-sum-cell" id="day-sum-13">0</td><td class="day-sum-cell" id="day-sum-14">0</td><td class="day-sum-cell" id="day-sum-15">0</td>
@@ -395,7 +394,6 @@
                 <!-- 每日夜班人數統計 -->
                 <tr>
                     <td class="summary-title">夜班人數</td>
-                    <!-- 9/1 ~ 9/30 夜班人數儲存格 -->
                     <td class="night-sum-cell" id="night-sum-1">0</td><td class="night-sum-cell" id="night-sum-2">0</td><td class="night-sum-cell" id="night-sum-3">0</td><td class="night-sum-cell" id="night-sum-4">0</td><td class="night-sum-cell" id="night-sum-5">0</td>
                     <td class="night-sum-cell" id="night-sum-6">0</td><td class="night-sum-cell" id="night-sum-7">0</td><td class="night-sum-cell" id="night-sum-8">0</td><td class="night-sum-cell" id="night-sum-9">0</td><td class="night-sum-cell" id="night-sum-10">0</td>
                     <td class="night-sum-cell" id="night-sum-11">0</td><td class="night-sum-cell" id="night-sum-12">0</td><td class="night-sum-cell" id="night-sum-13">0</td><td class="night-sum-cell" id="night-sum-14">0</td><td class="night-sum-cell" id="night-sum-15">0</td>
@@ -408,16 +406,14 @@
         </table>
     </div>
 
-    <!-- JavaScript 自動計算腳本（個人出勤天數 & 每日日夜班總人數） -->
+    <!-- JavaScript 自動計算腳本 -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const rows = document.querySelectorAll('#scheduleTable tbody tr');
             
-            // 初始化每日統計陣列 (1~30日)
             const dailyDayCount = new Array(31).fill(0);
             const dailyNightCount = new Array(31).fill(0);
 
-            // 1. 計算每位員工的出勤與放假天數，同時累加每日班別人數
             rows.forEach(row => {
                 const cells = row.querySelectorAll('td');
                 let workCount = 0;
@@ -436,12 +432,10 @@
                     }
                 }
                 
-                // 填入個人出勤與放假統計
                 row.querySelector('.work-count').textContent = workCount;
                 row.querySelector('.off-count').textContent = offCount;
             });
 
-            // 2. 填入每日日班與夜班的統計數據到底部 tfoot 儲存格
             for (let day = 1; day <= 30; day++) {
                 const dayCell = document.getElementById(`day-sum-${day}`);
                 const nightCell = document.getElementById(`night-sum-${day}`);
