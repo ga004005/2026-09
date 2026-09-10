@@ -184,12 +184,15 @@
             font-weight: bold;
         }
 
-        .day { color: #0284c7; font-weight: bold; }
-        .night { color: #334155; font-weight: bold; }
-        .off { color: #f43f5e; font-weight: bold; }
-        .special { color: #16a34a; font-weight: bold; }
-        .holiday { background-color: #f1f5f9 !important; }
-        .ot { background-color: #fef08a !important; color: #854d0e !important; font-weight: bold; }
+        /* 文字色彩設定 */
+        td.day { color: #0284c7 !important; font-weight: bold; }
+        td.night { color: #334155 !important; font-weight: bold; }
+        td.off { color: #f43f5e !important; font-weight: bold; }
+        td.special { color: #16a34a !important; font-weight: bold; }
+
+        /* 背景底色 */
+        td.holiday { background-color: #f1f5f9 !important; }
+        td.ot { background-color: #fef08a !important; color: #854d0e !important; font-weight: bold !important; }
     </style>
 </head>
 <body>
@@ -246,7 +249,7 @@
                     <td class="stat-cell work-count">0</td>
                     <td class="stat-cell off-count">0</td>
                 </tr>
-                <!-- 02. 劉佳峰 (已修正 9/5 為黃底加班) -->
+                <!-- 02. 劉佳峰 (黃底加班：9/5) -->
                 <tr>
                     <td class="name-cell">劉佳峰</td>
                     <td class="day">\</td><td class="day">\</td><td class="day">\</td><td class="day">\</td><td class="day holiday ot">\</td>
@@ -258,7 +261,7 @@
                     <td class="stat-cell work-count">0</td>
                     <td class="stat-cell off-count">0</td>
                 </tr>
-                <!-- 03. 彭家祥 -->
+                <!-- 03. 彭家祥 (修正黃底加班：僅 9/27, 9/28) -->
                 <tr>
                     <td class="name-cell">彭家祥</td>
                     <td class="night">⬛</td><td class="night">⬛</td><td class="night">⬛</td><td class="night">⬛</td><td class="night holiday">⬛</td>
@@ -266,7 +269,7 @@
                     <td class="night">⬛</td><td class="night holiday">⬛</td><td class="off holiday">＊</td><td class="off">＊</td><td class="night">⬛</td>
                     <td class="night">⬛</td><td class="night">⬛</td><td class="night">⬛</td><td class="night holiday">⬛</td><td class="night holiday">⬛</td>
                     <td class="off">＊</td><td class="night">⬛</td><td class="night">⬛</td><td class="night">⬛</td><td class="off holiday">＊</td>
-                    <td class="off holiday">＊</td><td class="night holiday">⬛</td><td class="night holiday">⬛</td><td class="night">⬛</td><td class="night">⬛</td>
+                    <td class="off holiday">＊</td><td class="night holiday ot">⬛</td><td class="night holiday ot">⬛</td><td class="night">⬛</td><td class="night">⬛</td>
                     <td class="stat-cell work-count">0</td>
                     <td class="stat-cell off-count">0</td>
                 </tr>
@@ -282,7 +285,7 @@
                     <td class="stat-cell work-count">0</td>
                     <td class="stat-cell off-count">0</td>
                 </tr>
-                <!-- 05. 林志學 -->
+                <!-- 05. 林志學 (黃底加班：9/25, 9/26) -->
                 <tr>
                     <td class="name-cell">林志學</td>
                     <td class="night">⬛</td><td class="night">⬛</td><td class="off">＊</td><td class="off">＊</td><td class="off holiday">＊</td>
@@ -306,7 +309,7 @@
                     <td class="stat-cell work-count">0</td>
                     <td class="stat-cell off-count">0</td>
                 </tr>
-                <!-- 07. 張舜家 -->
+                <!-- 07. 張舜家 (黃底加班：9/7, 9/12) -->
                 <tr>
                     <td class="name-cell">張舜家</td>
                     <td class="day">\</td><td class="day">\</td><td class="day">\</td><td class="day">\</td><td class="night holiday">⬛</td>
@@ -318,7 +321,7 @@
                     <td class="stat-cell work-count">0</td>
                     <td class="stat-cell off-count">0</td>
                 </tr>
-                <!-- 08. 邱至遠 -->
+                <!-- 08. 邱至遠 (黃底加班：9/13) -->
                 <tr>
                     <td class="name-cell">邱至遠</td>
                     <td class="day">\</td><td class="day">\</td><td class="day">\</td><td class="day">\</td><td class="day holiday">\</td>
@@ -330,7 +333,7 @@
                     <td class="stat-cell work-count">0</td>
                     <td class="stat-cell off-count">0</td>
                 </tr>
-                <!-- 09. 吳崇華 -->
+                <!-- 09. 吳崇華 (黃底加班：9/6, 9/27) -->
                 <tr>
                     <td class="name-cell">吳崇華</td>
                     <td class="night">⬛</td><td class="night">⬛</td><td class="night">⬛</td><td class="night">⬛</td><td class="off holiday">＊</td>
@@ -342,7 +345,7 @@
                     <td class="stat-cell work-count">0</td>
                     <td class="stat-cell off-count">0</td>
                 </tr>
-                <!-- 10. 閻翔 -->
+                <!-- 10. 閻翔 (黃底加班：9/27) -->
                 <tr>
                     <td class="name-cell">閻翔</td>
                     <td class="day">\</td><td class="day">\</td><td class="day">\</td><td class="off">＊</td><td class="off holiday">＊</td>
