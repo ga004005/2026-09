@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026 年 10 月尚達化工出勤表</title>
+    <style>
+        body {
+            font-family: Arial, "Microsoft JhengHei", -apple-system, BlinkMacSystemFont, sans-serif;
+            margin: 15px;
+            background-color: #f8fafc;
+            color: #0f172a;
+        }
+        
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 5px;
+        }
+        h1 {
+            color: #1e293b;
+            margin: 0;
+            font-size: 1.5rem;
+        }
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background-color: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 50%;
+            color: #0f172a;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            transition: all 0.2s ease;
+        }
+        .nav-btn:hover {
+            background-color: #0f172a;
+            color: #ffffff;
+            border-color: #0f172a;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+        
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #ffffff;
+            padding: 5px 10px;
+            border-radius: 6px;
+            border: 1px solid #cbd5e1;
+        }
+        .box {
+            width: 22px;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            background-color: #ffffff;
+            border: 1px solid #cbd5e1;
+        }
+        
+        .box-day { color: #0284c7; font-weight: bold; }
+        .box-night { color: #334155; font-weight: bold; }
+        .box-off { color: #f43f5e; font-weight: bold; }
+        .box-special { color: #16a34a; font-weight: bold; }
+        .box-holiday { background-color: #f1f5f9; border: 1px solid #cbd5e1; }
+        .box-ot { background-color: #fef08a; border: 1.5px solid #eab308; }
+
+        .table-container {
+            overflow-x: auto;
+            background: #ffffff;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            border: 1px solid #cbd5e1;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+            text-align: center;
+            white-space: nowrap;
+            table-layout: fixed;
+        }
+        th, td {
+            border: 1px solid #cbd5e1;
+            padding: 0;
+            width: 36px;
+            height: 36px;
+            vertical-align: middle;
+            background-color: #ffffff;
+            box-sizing: border-box;
+        }
+        th {
+            background-color: #0f172a;
+            color: #ffffff;
+            font-weight: bold;
+        }
+        th.weekday-row {
+            background-color: #1e293b;
+            color: #94a3b8;
+            font-size: 0.75rem;
+        }
+        th.weekend {
+            color: #fb7185;
+        }
+        th.name-col {
+            width: 85px;
+            min-width: 85px;
+            position: sticky;
+            left: 0;
+            background-color: #0f172a;
+            z-index: 10;
+        }
+        td.name-cell {
+            width: 85px;
+            min-width: 85px;
+            position: sticky;
+            left: 0;
+            background-color: #ffffff;
+            font-weight: bold;
+            color: #1e293b;
+            z-index: 5;
+            border-right: 2px solid #cbd5e1;
+        }
+        
+        th.stat-header {
+            width: 65px;
+            background-color: #0f172a;
+            color: #ffffff;
+        }
+        td.stat-cell {
+            width: 65px;
+            background-color: #f8fafc;
+            font-weight: bold;
+            color: #0f172a;
+        }
+
+        tfoot tr {
+            background-color: #f1f5f9;
+            font-weight: bold;
+        }
+        td.summary-title {
+            position: sticky;
+            left: 0;
+            background-color: #0f172a;
+            color: #ffffff;
+            font-weight: bold;
+            z-index: 5;
+            border-right: 2px solid #cbd5e1;
+        }
+        td.day-sum-cell {
+            color: #0284c7;
+            background-color: #f0f9ff;
+            font-weight: bold;
+        }
+        td.night-sum-cell {
+            color: #334155;
+            background-color: #f1f5f9;
+            font-weight: bold;
+        }
+
+        td.day { color: #0284c7 !important; font-weight: bold; }
+        td.night { color: #334155 !important; font-weight: bold; }
+        td.off { color: #f43f5e !important; font-weight: bold; }
+        td.special { color: #16a34a !important; font-weight: bold; }
+
+        td.holiday { background-color: #f1f5f9 !important; }
+        td.ot { background-color: #fef08a !important; border: 1.5px solid #eab308 !important; }
+    </style>
+</head>
+<body>
+
+    <div class="header-container">
+        <a href="#" class="nav-btn" title="上一個月 (9月)">&#10094;</a>
+        <h1>2026 年 10 月尚達化工出勤表</h1>
+        <a href="#" class="nav-btn" title="下一個月 (11月)">&#10095;</a>
+    </div>
+    <p class="subtitle">每日班別標示、假日淺灰底、黃底加班與自動出勤人數統計</p>
+
+    <div class="legend">
+        <div class="legend-item"><div class="box box-day">\</div> 日班</div>
+        <div class="legend-item"><div class="box box-night">⬛</div> 夜班</div>
+        <div class="legend-item"><div class="box box-off">＊</div> 休假</div>
+        <div class="legend-item"><div class="box box-special">特</div> 特休</div>
+        <div class="legend-item"><div class="box box-holiday"></div> 假日/國定假日</div>
+        <div class="legend-item"><div class="box box-ot"></div> 加班</div>
+    </div>
+
+    <div class="table-container">
+        <table id="scheduleTable">
+            <thead>
+                <tr>
+                    <th class="name-col" rowspan="2">姓名 / 日期</th>
+                    <th>10/1</th><th>10/2</th><th class="weekend">10/3</th><th class="weekend">10/4</th><th>10/5</th>
+                    <th>10/6</th><th>10/7</th><th>10/8</th><th>10/9</th><th class="weekend">10/10</th>
+                    <th class="weekend">10/11</th><th>10/12</th><th>10/13</th><th>10/14</th><th>10/15</th>
+                    <th>10/16</th><th class="weekend">10/17</th><th class="weekend">10/18</th><th>10/19</th><th>10/20</th>
+                    <th>10/21</th><th>10/22</th><th>10/23</th><th class="weekend">10/24</th><th class="weekend">10/25</th>
+                    <th>10/26</th><th>10/27</th><th>10/28</th><th>10/29</th><th>10/30</th>
+                    <th class="weekend">10/31</th>
+                    <th class="stat-header" rowspan="2">出勤天數</th>
+                    <th class="stat-header" rowspan="2">放假天數</th>
+                </tr>
+                <tr>
+                    <th class="weekday-row">四</th><th class="weekday-row">五</th><th class="weekday-row weekend">六</th><th class="weekday-row weekend">日</th><th class="weekday-row">一</th>
+                    <th class="weekday-row">二</th><th class="weekday-row">三</th><th class="weekday-row">四</th><th class="weekday-row">五</th><th class="weekday-row weekend">六</th>
+                    <th class="weekday-row weekend">日</th><th class="weekday-row">一</th><th class="weekday-row">二</th><th class="weekday-row">三</th><th class="weekday-row">四</th>
+                    <th class="weekday-row">五</th><th class="weekday-row weekend">六</th><th class="weekday-row weekend">日</th><th class="weekday-row">一</th><th class="weekday-row">二</th>
+                    <th class="weekday-row">三</th><th class="weekday-row">四</th><th class="weekday-row">五</th><th class="weekday-row weekend">六</th><th class="weekday-row weekend">日</th>
+                    <th class="weekday-row">一</th><th class="weekday-row">二</th><th class="weekday-row">三</th><th class="weekday-row">四</th><th class="weekday-row">五</th>
+                    <th class="weekday-row weekend">六</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- 01. 李宗翰 -->
+                <tr>
+                    <td class="name-cell">李宗翰</td>
+                    <td class="day">\</td><td class="day">\</td><td class="off holiday">＊</td><td class="off holiday">＊</td><td class="day">\</td>
+                    <td class="day">\</td><td class="day">\</td><td class="day">\</td><td class="off holiday">＊</td><td class="off holiday">＊</td>
+                    <td class="off holiday">＊</td><td class="day">\</td><td class="day">\</td><td class="day">\</td><td class="day">\</td>
+                    <td class="day">\</td><td class="off holiday">＊</td><td class="off holiday">＊</td><td class="day">\</td><td class="day">\</td>
+                    <td class="day">\</td><td class="day">\</td><td class="day">\</td><td class="off holiday">＊</td><td class="off holiday">＊</td>
+                    <td class="off holiday">＊</td><td class="day">\</td><td class="day">\</td><td class="day">\</td><td class="day">\</td>
+                    <td class="off holiday">＊</td>
+                    <td class="stat-cell work-count">20</td>
+                    <td class="stat-cell off-count">11</td>
+                </tr>
+                <!-- 02. 劉佳峰 -->
+                <tr>
+                    <td class="name-cell">劉佳峰</td>
+                    <td class="day">\</td><td class="day">\</td><td class="off holiday">＊</td><td class="off holiday">＊</td><td class="day">\</td>
+                    <td class="day">\</td><td class="day">\</td><td class="day">\</td><td class="off holiday">＊</td><td class="off holiday">＊</td>
+                    <td class="off holiday">＊</td><td class="day">\</td><td class="day">\</td><td class="day">\</td><td class="day">\</td>
+                    <td class="day">\</td><td class="off holiday">＊</td><td class="off holiday">＊</td><td class="day">\</td><td class="day">\</td>
+                    <td class="day">\</td><td class="day">\</td><td class="day">\</td><td class="off holiday">＊</td><td class="off holiday">＊</td>
+                    <td class="off holiday">＊</td><td class="day">\</td><td class="day">\</td><td class="day">\</td><td class="day">\</td>
+                    <td class="day ot holiday">\</td>
+                    <td class="stat-cell work-count">21</td>
+                    <td class="stat-cell off-count">10</td>
+                </tr>
+                <!-- 03. 彭家祥 -->
+                <tr>
+                    <td class="name-cell">彭家祥</td>
+                    <td class="night">⬛</td><td class="night">⬛</td><td class="off holiday">＊</td><td class="off holiday">＊</td><td class="off">＊</td>
+                    <td class="night">⬛</td><td class="night">⬛</td><td class="night">⬛</td><td class="night holiday">⬛</td><td class="night ot holiday">⬛</td>
+                    <td class="off holiday">＊</td><td class="off">＊</td><td class="night">⬛</td><td class="night">⬛</td><td class="night">⬛</td>
+                    <td class="night">⬛</td><td class="off holiday">＊</td><td class="night holiday">⬛</td><td class="night">⬛</td><td class="night">⬛</td>
+                    <td class="night">⬛</td><td class="night">⬛</td><td class="night">⬛</td><td class="off holiday">＊</td><td class="off holiday">＊</td>
+                    <td class="off holiday">＊</td><td class="night">⬛</td><td class="night">⬛</td><td class="night">⬛</td><td class="night">⬛</td>
+                    <td class="off holiday">＊</td>
+                    <td class="stat-cell work-count">21</td>
+                    <td class="stat-cell off-count">10</td>
+                </tr>
+                <!-- 04. 許國輝 -->
+                <tr>
+                    <td class="name-cell">許國輝</td>
+                    <td class="off">＊</td><td class="off">＊</td><td class="night holiday">⬛</td><td class="night holiday">⬛</td><td class="night">⬛</td>
+                    <td class="off">＊</td><td class="off">＊</td><td class="night">⬛</td><td class="night holiday">⬛</td><td class="off holiday">＊</td>
+                    <td class="off holiday">＊</td><td class="night">⬛</td><td class="night">⬛</td><td class="night">⬛</td><td class="night">⬛</td>
+                    <td class="night">⬛</td><td class="night ot holiday">⬛</td><td class="off holiday">＊</td><td class="off">＊</td><td class="night">⬛</td>
+                    <td class="night">⬛</td><td class="night">⬛</td><td class="night">⬛</td><td class="night holiday">⬛</td><td class="night holiday">⬛</td>
+                    <td class="off holiday">＊</td><td class="off">＊</td><td class="night">⬛</td><td class="night">⬛</td><td class="night">⬛</td>
+                    <td class="night holiday">⬛</td>
+                    <td class="stat-cell work-count">21</td>
+                    <td class="stat-cell off-count">10</td>
+                </tr>
+                <!-- 05. 林志學 -->
+                <tr>
+                    <td class="name-cell">林志學</td>
+                    <td class="night">⬛</td><td class="night">⬛</td><td class="off holiday">＊</td><td class="off holiday">＊</td><td class="day">\</td>
+                    <td class="day">\</td><td class="day">\</td><td class="day">\</td><td class="day holiday">\</td><td class="off holiday">＊</td>
+                    <td class="off holiday">＊</td><td class="off">＊</td><td class="day">\</td><td class="day">\</td><td class="day">\</td>
+                    <td class="day">\</td><td class="day holiday">\</td><td class="off holiday">＊</td><td class="off">＊</td><td class="day">\</td>
+                    <td class="day">\</td><td class="day">\</td><td class="day">\</td><td class="day holiday">\</td><td class="day ot holiday">\</td>
+                    <td class="off holiday">＊</td><td class="off">＊</td><td class="off">＊</td><td class="night">⬛</td><td class="night">⬛</td>
+                    <td class="night holiday">⬛</td>
+                    <td class="stat-cell work-count">21</td>
+                    <td class="stat-cell off-count">10</td>
+                </tr>
+                <!-- 06. 陳宇哲 -->
+                <tr>
+                    <td class="name-cell">陳宇哲</td>
+                    <td class="night">⬛</td><td class="night">⬛</td><td class="night holiday">⬛</td><td class="off holiday">＊</td><td class="off">＊</td>
+                    <td class="night">⬛</td><td class="special">特</td><td class="night">⬛</td><td class="off holiday">＊</td><td class="night ot holiday">⬛</td>
+                    <td class="night holiday">⬛</td><td class="night">⬛</td><td class="night">⬛</td><td class="night">⬛</td><td class="night">⬛</td>
+                    <td class="off">＊</td><td class="off holiday">＊</td><td class="off holiday">＊</td><td class="night">⬛</td><td class="night">⬛</td>
+                    <td class="night">⬛</td><td class="night">⬛</td><td class="off">＊</td><td class="off holiday">＊</td><td class="night holiday">⬛</td>
+                    <td class="night holiday">⬛</td><td class="night">⬛</td><td class="night">⬛</td><td class="night">⬛</td><td class="off">＊</td>
+                    <td class="off holiday">＊</td>
+                    <td class="stat-cell work-count">20</td>
+                    <td class="stat-cell off-count">11</td>
+                </tr>
+                <!-- 07. 張舜家 -->
+                <tr>
+                    <td class="name-cell">張舜家</td>
+                    <td class="night">⬛</td><td class="off">＊</td><td class="off holiday">＊</td><td class="day holiday">\</td><td class="day">\</td>
+                    <td class="day">\</td><td class="off">＊</td><td class="off">＊</td><td class="off holiday">＊</td><td class="day holiday">\</td>
+                    <td class="day holiday">\</td><td class="day">\</td><td class="day">\</td><td class="day">\</td><td class="day">\</td>
+                    <td class="off">＊</td><td class="off holiday">＊</td><td class="day holiday">\</td><td class="day">\</td><td class="day">\</td>
+                    <td class="day">\</td><td class="day">\</td><td class="off">＊</td><td class="off holiday">＊</td><td class="off holiday">＊</td>
+                    <td class="day holiday">\</td><td class="day">\</td><td class="day">\</td><td class="day">\</td><td class="day">\</td>
+                    <td class="off holiday">＊</td>
+                    <td class="stat-cell work-count">20</td>
+                    <td class="stat-cell off-count">11</td>
+                </tr>
+                <!-- 08. 邱至遠 -->
+                <tr>
+                    <td class="name-cell">邱至遠</td>
+                    <td class="day">\</td><td class="day">\</td><td class="off holiday">＊</td><td class="night holiday">⬛</td><td class="night">⬛</td>
+                    <td class="night">⬛</td><td class="night">⬛</td><td class="off">＊</td><td class="off holiday">＊</td><td class="off holiday">＊</td>
+                    <td class="night holiday">⬛</td><td class="night">⬛</td><td class="night">⬛</td><td class="night">⬛</td><td class="night">⬛</td>
+                    <td class="off">＊</td><td class="night holiday">⬛</td><td class="night holiday">⬛</td><td class="night">⬛</td><td class="night">⬛</td>
+                    <td class="night">⬛</td><td class="off">＊</td><td class="off">＊</td><td class="night ot holiday">⬛</td><td class="night holiday">⬛</td>
+                    <td class="night holiday">⬛</td><td class="night">⬛</td><td class="night">⬛</td><td class="off">＊</td><td class="off">＊</td>
+                    <td class="off holiday">＊</td>
+                    <td class="stat-cell work-count">21</td>
+                    <td class="stat-cell off-count">10</td>
+                </tr>
+                <!-- 09. 吳崇華 -->
+                <tr>
+                    <td class="name-cell">吳崇華</td>
+                    <td class="off">＊</td><td class="off">＊</td><td class="day holiday">\</td><td class="day holiday">\</td><td class="off">＊</td>
+                    <td class="off">＊</td><td class="day">\</td><td class="day">\</td><td class="day holiday">\</td><td class="day holiday">\</td>
+                    <td class="off holiday">＊</td><td class="off">＊</td><td class="off">＊</td><td class="day">\</td><td class="day">\</td>
+                    <td class="day">\</td><td class="day holiday">\</td><td class="off holiday">＊</td><td class="off">＊</td><td class="day">\</td>
+                    <td class="day">\</td><td class="day">\</td><td class="day">\</td><td class="day holiday">\</td><td class="day holiday">\</td>
+                    <td class="off holiday">＊</td><td class="off">＊</td><td class="off">＊</td><td class="day">\</td><td class="day">\</td>
+                    <td class="day holiday">\</td>
+                    <td class="stat-cell work-count">19</td>
+                    <td class="stat-cell off-count">12</td>
+                </tr>
+                <!-- 10. 閻翔 -->
+                <tr>
+                    <td class="name-cell">閻翔</td>
+                    <td class="day">\</td><td class="off">＊</td><td class="off holiday">＊</td><td class="day holiday">\</td><td class="day">\</td>
+                    <td class="day">\</td><td class="day">\</td><td class="day">\</td><td class="off holiday">＊</td><td class="off holiday">＊</td>
+                    <td class="day ot holiday">\</td><td class="day">\</td><td class="day">\</td><td class="day">\</td><td class="day">\</td>
+                    <td class="off">＊</td><td class="off holiday">＊</td><td class="day holiday">\</td><td class="day">\</td><td class="day">\</td>
+                    <td class="day">\</td><td class="day">\</td><td class="day">\</td><td class="off holiday">＊</td><td class="off holiday">＊</td>
+                    <td class="day holiday">\</td><td class="day">\</td><td class="day">\</td><td class="day">\</td><td class="day">\</td>
+                    <td class="off holiday">＊</td>
+                    <td class="stat-cell work-count">22</td>
+                    <td class="stat-cell off-count">9</td>
+                </tr>
+                <!-- 11. 戴裕霖 -->
+                <tr>
+                    <td class="name-cell">戴裕霖</td>
+                    <td class="day">\</td><td class="day">\</td><td class="off holiday">＊</td><td class="off holiday">＊</td><td class="day">\</td>
+                    <td class="day">\</td><td class="day">\</td><td class="day">\</td><td class="off holiday">＊</td><td class="off holiday">＊</td>
+                    <td class="off holiday">＊</td><td class="day">\</td><td class="day">\</td><td class="day">\</td><td class="day">\</td>
+                    <td class="day">\</td><td class="off holiday">＊</td><td class="off holiday">＊</td><td class="day">\</td><td class="day">\</td>
+                    <td class="day">\</td><td class="day">\</td><td class="day">\</td><td class="off holiday">＊</td><td class="off holiday">＊</td>
+                    <td class="off holiday">＊</td><td class="day">\</td><td class="day">\</td><td class="day">\</td><td class="day">\</td>
+                    <td class="off holiday">＊</td>
+                    <td class="stat-cell work-count">20</td>
+                    <td class="stat-cell off-count">11</td>
+                </tr>
+                <!-- 12. 蘇振興 -->
+                <tr>
+                    <td class="name-cell">蘇振興</td>
+                    <td class="day">\</td><td class="day">\</td><td class="off holiday">＊</td><td class="off holiday">＊</td><td class="day">\</td>
+                    <td class="day">\</td><td class="day">\</td><td class="day">\</td><td class="off holiday">＊</td><td class="off holiday">＊</td>
+                    <td class="off holiday">＊</td><td class="day">\</td><td class="day">\</td><td class="day">\</td><td class="day">\</td>
+                    <td class="day">\</td><td class="off holiday">＊</td><td class="off holiday">＊</td><td class="day">\</td><td class="day">\</td>
+                    <td class="day">\</td><td class="day">\</td><td class="day">\</td><td class="off holiday">＊</td><td class="off holiday">＊</td>
+                    <td class="off holiday">＊</td><td class="day">\</td><td class="day">\</td><td class="day">\</td><td class="day">\</td>
+                    <td class="off holiday">＊</td>
+                    <td class="stat-cell work-count">20</td>
+                    <td class="stat-cell off-count">11</td>
+                </tr>
+                <!-- 13. 徐鈺炫 -->
+                <tr>
+                    <td class="name-cell">徐鈺炫</td>
+                    <td class="day">\</td><td class="day">\</td><td class="off holiday">＊</td><td class="off holiday">＊</td><td class="day">\</td>
+                    <td class="day">\</td><td class="day">\</td><td class="day">\</td><td class="off holiday">＊</td><td class="off holiday">＊</td>
+                    <td class="off holiday">＊</td><td class="day">\</td><td class="day">\</td><td class="day">\</td><td class="day">\</td>
+                    <td class="day">\</td><td class="off holiday">＊</td><td class="off holiday">＊</td><td class="day">\</td><td class="day">\</td>
+                    <td class="day">\</td><td class="day">\</td><td class="day">\</td><td class="off holiday">＊</td><td class="off holiday">＊</td>
+                    <td class="off holiday">＊</td><td class="day">\</td><td class="day">\</td><td class="day">\</td><td class="day">\</td>
+                    <td class="off holiday">＊</td>
+                    <td class="stat-cell work-count">20</td>
+                    <td class="stat-cell off-count">11</td>
+                </tr>
+                <!-- 14. 阿塔 -->
+                <tr>
+                    <td class="name-cell">阿塔</td>
+                    <td class="day">\</td><td class="day">\</td><td class="off holiday">＊</td><td class="off holiday">＊</td><td class="day">\</td>
+                    <td class="day">\</td><td class="day">\</td><td class="day">\</td><td class="off holiday">＊</td><td class="off holiday">＊</td>
+                    <td class="off holiday">＊</td><td class="day">\</td><td class="day">\</td><td class="day">\</td><td class="day">\</td>
+                    <td class="day">\</td><td class="off holiday">＊</td><td class="off holiday">＊</td><td class="day">\</td><td class="day">\</td>
+                    <td class="day">\</td><td class="day">\</td><td class="day">\</td><td class="off holiday">＊</td><td class="off holiday">＊</td>
+                    <td class="off holiday">＊</td><td class="day">\</td><td class="day">\</td><td class="day">\</td><td class="day">\</td>
+                    <td class="off holiday">＊</td>
+                    <td class="stat-cell work-count">20</td>
+                    <td class="stat-cell off-count">11</td>
+                </tr>
+                <!-- 15. 百事 -->
+                <tr>
+                    <td class="name-cell">百事</td>
+                    <td class="night">⬛</td><td class="night">⬛</td><td class="off holiday">＊</td><td class="off holiday">＊</td><td class="night">⬛</td>
+                    <td class="night">⬛</td><td class="night">⬛</td><td class="night">⬛</td><td class="off holiday">＊</td><td class="off holiday">＊</td>
+                    <td class="off holiday">＊</td><td class="night">⬛</td><td class="night">⬛</td><td class="night">⬛</td><td class="night">⬛</td>
+                    <td class="night">⬛</td><td class="off holiday">＊</td><td class="off holiday">＊</td><td class="night">⬛</td><td class="night">⬛</td>
+                    <td class="night">⬛</td><td class="night">⬛</td><td class="night">⬛</td><td class="off holiday">＊</td><td class="off holiday">＊</td>
+                    <td class="off holiday">＊</td><td class="night">⬛</td><td class="night">⬛</td><td class="night">⬛</td><td class="night">⬛</td>
+                    <td class="off holiday">＊</td>
+                    <td class="stat-cell work-count">20</td>
+                    <td class="stat-cell off-count">11</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <!-- 每日日班人數（已手動計算，含假日） -->
+                <tr>
+                    <td class="summary-title">日班人數</td>
+                    <td class="day-sum-cell">8</td><td class="day-sum-cell">7</td><td class="day-sum-cell">1</td><td class="day-sum-cell">3</td><td class="day-sum-cell">9</td>
+                    <td class="day-sum-cell">9</td><td class="day-sum-cell">9</td><td class="day-sum-cell">9</td><td class="day-sum-cell">2</td><td class="day-sum-cell">2</td>
+                    <td class="day-sum-cell">2</td><td class="day-sum-cell">8</td><td class="day-sum-cell">9</td><td class="day-sum-cell">10</td><td class="day-sum-cell">10</td>
+                    <td class="day-sum-cell">8</td><td class="day-sum-cell">2</td><td class="day-sum-cell">2</td><td class="day-sum-cell">8</td><td class="day-sum-cell">10</td>
+                    <td class="day-sum-cell">10</td><td class="day-sum-cell">10</td><td class="day-sum-cell">9</td><td class="day-sum-cell">2</td><td class="day-sum-cell">2</td>
+                    <td class="day-sum-cell">2</td><td class="day-sum-cell">8</td><td class="day-sum-cell">8</td><td class="day-sum-cell">9</td><td class="day-sum-cell">9</td>
+                    <td class="day-sum-cell">2</td>
+                    <td colspan="2" class="stat-cell">-</td>
+                </tr>
+                <!-- 每日夜班人數（已手動計算，含假日） -->
+                <tr>
+                    <td class="summary-title">夜班人數</td>
+                    <td class="night-sum-cell">5</td><td class="night-sum-cell">4</td><td class="night-sum-cell">2</td><td class="night-sum-cell">2</td><td class="night-sum-cell">3</td>
+                    <td class="night-sum-cell">4</td><td class="night-sum-cell">3</td><td class="night-sum-cell">4</td><td class="night-sum-cell">2</td><td class="night-sum-cell">2</td>
+                    <td class="night-sum-cell">2</td><td class="night-sum-cell">4</td><td class="night-sum-cell">5</td><td class="night-sum-cell">5</td><td class="night-sum-cell">5</td>
+                    <td class="night-sum-cell">3</td><td class="night-sum-cell">2</td><td class="night-sum-cell">2</td><td class="night-sum-cell">4</td><td class="night-sum-cell">5</td>
+                    <td class="night-sum-cell">5</td><td class="night-sum-cell">4</td><td class="night-sum-cell">3</td><td class="night-sum-cell">2</td><td class="night-sum-cell">3</td>
+                    <td class="night-sum-cell">2</td><td class="night-sum-cell">4</td><td class="night-sum-cell">5</td><td class="night-sum-cell">5</td><td class="night-sum-cell">4</td>
+                    <td class="night-sum-cell">2</td>
+                    <td colspan="2" class="stat-cell">-</td>
+             </tr>
+            </tfoot>
+        </table>
+    </div>
+<p style="text-align: left; margin: 18px 0 0 0; color: #000000; font-size: 1.2rem;">
+    吳崇華 10 月多休一天
+</p></p>
+</body>
+</html>
